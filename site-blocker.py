@@ -105,3 +105,4 @@ readRules()
 ####or setup a custom chain and then flush it (does not work because iptc cannot create new chains or jump links)
 ####getRuleCount() findRule(), deleteRule() until getRuleCount() returns 0
 
+
