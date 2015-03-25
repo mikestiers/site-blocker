@@ -86,7 +86,7 @@ def deleteRule(line, ip_list):
         try:
             #pdb.set_trace()
             chain.delete_rule(r)
-            time.sleep(60)
+            table.commit()
         except:
             print "exception"
             debug.write("Exception\n")
