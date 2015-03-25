@@ -8,6 +8,7 @@ import os
 import socket
 import iptc
 import time
+import pdb
 
 config_file = os.getenv("HOME") + '/site-blocker-rules.conf'
 debug_file = os.getenv("HOME") + '/site-blocker-rules.log'
@@ -29,7 +30,8 @@ def applyRule(line, ip_list):
         rule.dst = ip
         rule.target = rule.create_target("DROP")
         match = rule.create_match("comment")
-        match.comment = str(t) + "-" + line.rstrip()
+        match.comment = line.rstrip()
+        #match.comment = str(t) + "-" + line.rstrip()
         table = iptc.Table(iptc.Table.FILTER)
         chain = iptc.Chain(table, "OUTPUT")
         chain.insert_rule(rule)
@@ -76,12 +78,15 @@ def deleteRule(line, ip_list):
     rules_size = len(rules_list)
 
     for r in rules_list:
+        # troubleshooting
+        for r in rules_list:
+            print r.dst
+            print r
+        # troubleshooting
         try:
-            chain.delete_rule(rules_list[0]) # used to be just "r"
-            debug.write("Position AD: " + str(position) + "\n")
-            debug.write("Rule AD: " + str(r) + "\n")
-            debug.write("Rule dst AD: " + str(r.dst) + "\n")
-            debug.write("Rules List AD: " + str(r) + "\n")
+            #pdb.set_trace()
+            chain.delete_rule(r)
+            time.sleep(60)
         except:
             print "exception"
             debug.write("Exception\n")
